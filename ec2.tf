@@ -10,7 +10,7 @@ resource "aws_instance" "calvin" {
     aws_region = var.aws_region
   })
 
-  user_data_replace_on_change = true
+  user_data_replace_on_change = false
 
   metadata_options {
     http_endpoint               = "enabled"

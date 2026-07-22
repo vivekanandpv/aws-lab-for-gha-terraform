@@ -26,6 +26,7 @@ jq -c 'to_entries[]' <<< "$CONFIG_JSON" | while read -r entry; do
   gh variable set ECR_REPOSITORY     --repo "$full_repo" --body "$ecr_repository"
   gh variable set SSM_DOCUMENT       --repo "$full_repo" --body "$ssm_document"
   gh variable set CALVIN_INSTANCE_ID --repo "$full_repo" --body "$instance_id"
+  gh variable set STUDENT_ID         --repo "$full_repo" --body "$student_id"
 done
 
 echo "All learner repositories now have their Actions variables."

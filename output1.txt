@@ -1,0 +1,49 @@
+{
+    "Command": {
+        "CommandId": "1b848c31-323b-471e-89e0-cf456bce21c6",
+        "DocumentName": "grand-calvin-deploy-student01",
+        "DocumentVersion": "$DEFAULT",
+        "Comment": "",
+        "ExpiresAfter": "2026-07-22T19:55:51.823000+05:30",
+        "Parameters": {
+            "ImageUri": [
+                "750819667599.dkr.ecr.ap-south-1.amazonaws.com/training/student01:YOUR_EXISTING_TAG"
+            ],
+            "StudentId": [
+                "vivekanand"
+            ]
+        },
+        "InstanceIds": [
+            "i-0053a0b1ebb6af559"
+        ],
+        "Targets": [],
+        "RequestedDateTime": "2026-07-22T18:50:51.823000+05:30",
+        "Status": "Pending",
+        "StatusDetails": "Pending",
+        "OutputS3Region": "ap-south-1",
+        "OutputS3BucketName": "",
+        "OutputS3KeyPrefix": "",
+        "MaxConcurrency": "50",
+        "MaxErrors": "0",
+        "TargetCount": 1,
+        "CompletedCount": 0,
+        "ErrorCount": 0,
+        "DeliveryTimedOutCount": 0,
+        "ServiceRole": "",
+        "NotificationConfig": {
+            "NotificationArn": "",
+            "NotificationEvents": [],
+            "NotificationType": ""
+        },
+        "CloudWatchOutputConfig": {
+            "CloudWatchLogGroupName": "",
+            "CloudWatchOutputEnabled": false
+        },
+        "TimeoutSeconds": 3600,
+        "AlarmConfiguration": {
+            "IgnorePollAlarmFailure": false,
+            "Alarms": []
+        },
+        "TriggeredAlarms": []
+    }
+}

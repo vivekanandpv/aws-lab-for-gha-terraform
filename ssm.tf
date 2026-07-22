@@ -15,6 +15,13 @@ resource "aws_ssm_document" "student_deploy" {
         interpolationType = "ENV_VAR"
         allowedPattern    = "^[0-9]{12}\\.dkr\\.ecr\\.${var.aws_region}\\.amazonaws\\.com/training/${each.key}:[A-Za-z0-9._-]+$"
       }
+
+      StudentId = {
+        type              = "String"
+        description       = "Student identifier supplied by the learner repository"
+        interpolationType = "ENV_VAR"
+        allowedPattern    = "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$"
+      }
     }
     mainSteps = [{
       action = "aws:runShellScript"
@@ -27,7 +34,8 @@ resource "aws_ssm_document" "student_deploy" {
         runCommand = [
           "set -euo pipefail",
           "if [ -z \"$${SSM_ImageUri+x}\" ]; then export SSM_ImageUri='{{ImageUri}}'; fi",
-          "/opt/calvin/bin/deploy-student '${each.key}' \"$SSM_ImageUri\" '${each.value.port}'"
+          "if [ -z \"$${SSM_StudentId+x}\" ]; then export SSM_StudentId='{{StudentId}}'; fi",
+          "/opt/calvin/bin/deploy-student '${each.key}' \"$SSM_ImageUri\" '${each.value.port}' \"$SSM_StudentId\""
         ]
       }
     }]

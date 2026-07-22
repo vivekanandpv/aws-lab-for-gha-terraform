@@ -19,14 +19,20 @@ cat >/opt/calvin/bin/deploy-student <<'SCRIPT'
 #!/bin/bash
 set -euo pipefail
 
-STUDENT_ID="$${1:-}"
-IMAGE_URI="$${2:-}"
-HOST_PORT="$${3:-}"
+DEPLOYMENT_SLOT="$1"
+IMAGE_URI="$2"
+HOST_PORT="$3"
+STUDENT_ID="$4"
 AWS_REGION="${aws_region}"
 
-if [[ ! "$STUDENT_ID" =~ ^student([0-2][0-9]|30)$ ]]; then
-  echo "Invalid student ID: $STUDENT_ID" >&2
+if [[ ! "$DEPLOYMENT_SLOT" =~ ^student([0-2][0-9]|30)$ ]]; then
+  echo "Invalid deployment slot: $DEPLOYMENT_SLOT" >&2
   exit 10
+fi
+
+if [[ ! "$STUDENT_ID" =~ ^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$ ]]; then
+  echo "Invalid student name: $STUDENT_ID" >&2
+  exit 11
 fi
 
 if [[ ! "$HOST_PORT" =~ ^81(0[1-9]|[12][0-9]|30)$ ]]; then
@@ -39,15 +45,15 @@ if [[ ! "$IMAGE_URI" =~ ^[0-9]{12}\.dkr\.ecr\.${aws_region}\.amazonaws\.com/trai
   exit 12
 fi
 
-EXPECTED_REPOSITORY="training/$STUDENT_ID"
+EXPECTED_REPOSITORY="training/$DEPLOYMENT_SLOT"
 if [[ "$IMAGE_URI" != *"/$EXPECTED_REPOSITORY:"* ]]; then
-  echo "Image does not belong to $STUDENT_ID" >&2
+  echo "Image does not belong to deployment slot $DEPLOYMENT_SLOT" >&2
   exit 13
 fi
 
-CONTAINER_NAME="$${STUDENT_ID}-app"
+CONTAINER_NAME="$${DEPLOYMENT_SLOT}-app"
 REGISTRY="$${IMAGE_URI%%/*}"
-LOCK_FILE="/opt/calvin/locks/$${STUDENT_ID}.lock"
+LOCK_FILE="/opt/calvin/locks/$${DEPLOYMENT_SLOT}.lock"
 
 exec 9>"$LOCK_FILE"
 flock -n 9 || {
