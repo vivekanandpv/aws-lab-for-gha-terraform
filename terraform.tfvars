@@ -1,0 +1,21 @@
+aws_region = "ap-south-1"
+
+project_name = "grand-calvin"
+
+# Replace this with the training venue's public IP followed by /32.
+# Temporarily use 0.0.0.0/0 only when absolutely necessary.
+allowed_app_cidrs = ["0.0.0.0/0"]
+
+instance_type        = "m7i.2xlarge"
+root_volume_size_gib = 100
+
+github_owner  = "caelus-gha-training"
+github_branch = "main"
+
+# Keep true for a fresh AWS account. Set false if the GitHub OIDC provider
+# already exists in this AWS account, and supply its ARN below.
+create_github_oidc_provider       = true
+existing_github_oidc_provider_arn = null
+
+# students is generated separately by:
+# ./scripts/02-generate-students-tfvars.sh students.csv students.auto.tfvars
