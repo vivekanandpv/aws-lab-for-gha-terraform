@@ -9,7 +9,7 @@ allowed_app_cidrs = ["0.0.0.0/0"]
 instance_type        = "m7i.2xlarge"
 root_volume_size_gib = 100
 
-github_owner  = "caelus-gha-training"
+github_owner  = "cr-gha-aws-lab"
 github_branch = "main"
 
 # Keep true for a fresh AWS account. Set false if the GitHub OIDC provider

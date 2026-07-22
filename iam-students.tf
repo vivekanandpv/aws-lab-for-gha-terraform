@@ -17,9 +17,12 @@ data "aws_iam_policy_document" "student_oidc_trust" {
     }
 
     condition {
-      test     = "StringEquals"
+      test     = "StringLike"
       variable = "token.actions.githubusercontent.com:sub"
-      values   = ["repo:${var.github_owner}/${each.value.github_repository}:ref:refs/heads/${var.github_branch}"]
+
+      values = [
+        "repo:${var.github_owner}@*/${each.value.github_repository}@*:ref:refs/heads/${var.github_branch}"
+      ]
     }
   }
 }
